@@ -70,13 +70,14 @@ function traverse_folder
         elif [[ -f "${FILENAME}" ]]; then
             echo "    Copying file ${FILENAME} to ${fd}"
             {
-                rsync --timeout=1 --checksum --backup "${FILENAME}" "${fd}"
+                rsync --timeout=1 --checksum --times --backup "${FILENAME}" "${fd}"
             } || {
                 echo "    Failed to copy file ${FILENAME} to ${fd}"
                 continue
             }
         else
             echo "    ${FILENAME} is not valid"
+            continue
         fi
 
         echo ${FILENAME} >> ${BACKUP_LOG}
